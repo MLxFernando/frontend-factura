@@ -1,38 +1,237 @@
-.App {
+/* Estilos Generales */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Contenedor Principal */
+.container {
+  width: 90%;
+  max-width: 800px;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Títulos */
+h1 {
+  color: #343a40;
+  font-size: 26px;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h2 {
+  color: #495057;
+  font-size: 20px;
+  margin-top: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Formulario */
+.form-group {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  min-width: 150px;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+button {
+  padding: 12px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Botón de Crear Factura */
+button.crear {
+  background-color: #007bff;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+button.crear:hover {
+  background-color: #0056b3;
 }
 
-@keyframes App-logo-spin {
+/* Lista de Facturas */
+.facturas {
+  text-align: left;
+  margin-top: 20px;
+}
+
+.facturas ul {
+  list-style: none;
+  padding: 0;
+}
+
+.facturas li {
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  transition: 0.3s;
+}
+
+/* Colores según estado de factura */
+.factura-pagada {
+  background: #d4edda; /* Verde claro */
+  border-left: 6px solid #28a745;
+}
+
+.factura-pendiente {
+  background: #f8d7da; /* Rojo claro */
+  border-left: 6px solid #dc3545;
+}
+
+/* Mejor visibilidad del texto */
+.facturas li span {
+  font-size: 16px;
+  color: #333;
+}
+
+strong {
+  font-weight: 600;
+}
+
+/* Botón de Pagar */
+button.pagar {
+  background-color: #28a745;
+  color: white;
+}
+
+button.pagar:hover {
+  background-color: #218838;
+}
+
+/* Animación de Notificación */
+@keyframes fadeIn {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(-10px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.notification {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: #28a745;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Modal de Pago */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.modal select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.modal button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.modal button.close {
+  background: #dc3545;
+  color: white;
+}
+
+.modal button.pay {
+  background: #007bff;
+  color: white;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  .form-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  .facturas li {
+    padding: 12px;
+    text-align: center;
+  }
+
+  .modal-content {
+    width: 90%;
   }
 }
