@@ -16,12 +16,18 @@ function App() {
   const [selectedMetodo, setSelectedMetodo] = useState("");
 
   useEffect(() => {
-    fetchFacturas();
+    fetchFacturas(); 
+  
+    const interval = setInterval(() => {
+      fetchFacturas(); 
+    }, 1000);
+  
+    return () => clearInterval(interval); // Limpiar el intervalo al desmontar
   }, []);
 
   const fetchFacturas = async () => {
     try {
-      const response = await axios.get(`${API_URL}/facturas`);
+      const response = await axios.get(`${API_URL}/facturas`, { headers: { "Cache-Control": "no-cache" } });
       setFacturas(response.data);
     } catch (error) {
       console.error("Error al obtener facturas", error);
@@ -35,12 +41,12 @@ function App() {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/crear/factura`, {
+      await axios.post(`${API_URL}/crear/factura`, {
         cliente,
         monto,
         descripcion,
       });
-      setFacturas([...facturas, response.data]);
+      fetchFacturas(); 
       setCliente("");
       setMonto("");
       setDescripcion("");
@@ -65,7 +71,7 @@ function App() {
 
     setTimeout(async () => {
       try {
-        const response = await axios.post(`${API_URL}/facturas/pagar/${selectedFactura.id}`);
+         await axios.post(`${API_URL}/facturas/pagar/${selectedFactura.id}`);
         fetchFacturas();
         setNotification(`✅ ${selectedFactura.cliente} pagó la factura #${selectedFactura.id} con ${selectedMetodo}.`);
         setLoadingId(null);
